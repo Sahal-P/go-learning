@@ -1,13 +1,13 @@
 package main
 
-import "fmt"
 
-// finished 23. Multiple Return Values
+// finished 30. Shuffling a Deck
 
 func main() {
-	cards := newDeck()
-	hand, remainingCards := deal(cards, 5)
-	hand.printSliceWithComma()
-	fmt.Println("-----------------------------------------------------------------")
-	remainingCards.printSliceWithComma()
+	// cards := newDeck()
+	// cards.saveToFile("my_cards.txt")
+	cards := newDeckFromFile("my_cards.txt")
+	cards.printSliceWithComma()
+	cards.shuffle()
+	cards.printSliceWithComma()
 }
