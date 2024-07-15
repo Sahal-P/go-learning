@@ -34,11 +34,11 @@ func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
-func (this deck) printDeck() {
-	for i, card := range this {
-		fmt.Println(i, card)
-	}
-}
+// func (this deck) printDeck() {
+// 	for i, card := range this {
+// 		fmt.Println(i, card)
+// 	}
+// }
 
 func (d deck) printSliceWithComma() {
 	f, _ := json.Marshal(d)
