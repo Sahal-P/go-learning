@@ -14,7 +14,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// Task struct represents a task
 type Task struct {
 	ID          string    `json:"id,omitempty" bson:"_id,omitempty"`
 	Title       string    `json:"title,omitempty" bson:"title,omitempty"`
@@ -23,37 +22,28 @@ type Task struct {
 	UpdatedAt   time.Time `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }
 
-// MongoDB Config
 var client *mongo.Client
 
-// MongoDB connection context
 var ctx context.Context
 
 func main() {
-	// MongoDB initialization
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
 	ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 	client, _ = mongo.Connect(ctx, clientOptions)
 	defer client.Disconnect(ctx)
 
-	// Initialize router
 	router := mux.NewRouter()
 
-	// Define API endpoints
 	router.HandleFunc("/tasks", createTask).Methods("POST")
 	router.HandleFunc("/tasks", getTasks).Methods("GET")
 	router.HandleFunc("/tasks/{id}", getTaskByID).Methods("GET")
 	router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
 	router.HandleFunc("/tasks/{id}", deleteTask).Methods("DELETE")
 
-	// Start server
 	log.Fatal(http.ListenAndServe(":8000", router))
 	fmt.Println("Server started at port: 8000")
 }
 
-// Handler functions
-
-// Create a new task
 func createTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var task Task
@@ -70,7 +60,6 @@ func createTask(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(result)
 }
 
-// Get all tasks
 func getTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var tasks []Task
@@ -94,7 +83,6 @@ func getTasks(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(tasks)
 }
 
-// Get a single task by ID
 func getTaskByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
