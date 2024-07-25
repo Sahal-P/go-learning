@@ -14,7 +14,7 @@ type person struct {
 	contact    contactInfo
 }
 
-func (p person) print() {
+func (p person) print_test() {
 	fmt.Printf("%+v", p)
 }
 
